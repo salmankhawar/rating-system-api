@@ -12,7 +12,9 @@ app.use(bodyParser.json())
 // Database
 async function connectToDB() {
   try {
-    await mongoose.connect('INSERT MONGODB CONNECTION STRING')
+    await mongoose.connect(
+      'mongodb+srv://khawarsalman:Ozv15RxPy3B2BENq@google-search.od5xihm.mongodb.net/results'
+    )
     console.log('Connected to MongoDB')
   } catch (err) {
     console.log(err)
@@ -20,8 +22,22 @@ async function connectToDB() {
 }
 
 // Models
+const Results = mongoose.model('results', {
+  resultNumber: {
+    type: Number,
+    required: true,
+  },
+})
 
 // Routes
+app.post('/results', async (req, res) => {
+  try {
+    let newResult = await Results.create(req.body)
+    res.send(newResult)
+  } catch (err) {
+    res.send(err)
+  }
+})
 
 // Server
 app.listen(4000, () => {
