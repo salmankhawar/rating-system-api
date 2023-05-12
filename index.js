@@ -4,6 +4,7 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const app = express()
+require('dotenv').config()
 
 // Middleware
 app.use(cors())
@@ -12,9 +13,7 @@ app.use(bodyParser.json())
 // Database
 async function connectToDB() {
   try {
-    await mongoose.connect(
-      'mongodb+srv://khawarsalman:Ozv15RxPy3B2BENq@google-search.od5xihm.mongodb.net/results'
-    )
+    await mongoose.connect(process.env.MONGODB_URL)
     console.log('Connected to MongoDB')
   } catch (err) {
     console.log(err)
